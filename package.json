@@ -1,15 +1,17 @@
 {
-  "name": "faster-ui",
+  "name": "quynhtram-comic",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "npx prettier --write ."
   },
   "dependencies": {
     "next": "12.3.0",
+    "prettier": "^2.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "^1.54.9"
