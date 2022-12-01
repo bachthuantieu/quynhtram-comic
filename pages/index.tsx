@@ -1,5 +1,5 @@
 import { LayoutHome } from "layouts";
-import { HomeBanner } from "modules/home";
+import { HomeBanner, HomeNewest } from "modules/home";
 import type { NextPage } from "next";
 import Head from "next/head";
 
@@ -12,7 +12,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <LayoutHome>
-        <HomeBanner />
+        <HomeBanner></HomeBanner>
+        <HomeNewest></HomeNewest>
       </LayoutHome>
     </>
   );

@@ -5,6 +5,8 @@
 @layer base {
   body {
     font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    background-color: #f8f8f8;
   }
 }
 .layout-container {
@@ -12,4 +14,9 @@
   max-width: 1170px;
   margin: 0 auto;
   padding: 0 15px;
+}
+.comic-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  grid-gap: 20px 16px;
 }
