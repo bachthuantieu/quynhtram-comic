@@ -6,17 +6,21 @@
   body {
     font-family: "Roboto", sans-serif;
     font-size: 14px;
-    background-color: #f8f8f8;
+    // background-color: #f8f8f8;
   }
 }
 .layout-container {
   width: 100%;
   max-width: 1170px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   padding: 0 15px;
 }
 .comic-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
   grid-gap: 20px 16px;
+}
+.heading {
+  @apply my-[10px] font-medium text-[#212529] text-lg;
 }

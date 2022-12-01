@@ -1,7 +1,5 @@
-import { IconClock } from "components/icons";
 import { Image } from "components/image";
 import { WrapLink } from "components/link";
-import React from "react";
 
 const ComicCard = () => {
   return (
@@ -13,11 +11,11 @@ const ComicCard = () => {
           alt=""
         />
       </WrapLink>
-      <WrapLink className="mt-2 text-base font-medium line-clamp-2 text-purple8a">
+      <WrapLink className="mt-2 text-[15px] font-medium line-clamp-2">
         Hóa Ra Đó Chính Là Tình Yêu, Quỷ Vương!
       </WrapLink>
-      <div className="flex items-center justify-between mt-1">
-        <WrapLink className="text-purple8a">Chap 3</WrapLink>
+      <div className="flex items-center justify-between mt-[6px]">
+        <WrapLink className="text-[#707070]">Chap 3</WrapLink>
         <span className="text-[#878787]">1 ngày trước</span>
       </div>
     </div>

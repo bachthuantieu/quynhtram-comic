@@ -1,5 +1,5 @@
 import { LayoutHome } from "layouts";
-import { HomeBanner, HomeNewest } from "modules/home";
+import { HomeBanner, HomeCategory, HomeNewest } from "modules/home";
 import type { NextPage } from "next";
 import Head from "next/head";
 
@@ -13,6 +13,7 @@ const Home: NextPage = () => {
       </Head>
       <LayoutHome>
         <HomeBanner></HomeBanner>
+        <HomeCategory></HomeCategory>
         <HomeNewest></HomeNewest>
       </LayoutHome>
     </>
