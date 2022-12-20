@@ -6,7 +6,7 @@
   body {
     font-family: "Roboto", sans-serif;
     font-size: 14px;
-    // background-color: #f8f8f8;
+    color: #525666;
   }
 }
 .layout-container {
@@ -23,4 +23,30 @@
 }
 .heading {
   @apply my-[10px] font-medium text-[#212529] text-lg;
+}
+.btn-gradient {
+  @apply bg-theme;
+  outline: none;
+  border: none;
+  transition: all 0.4s ease-in-out;
+  background-size: 300% 100%;
+  &:hover {
+    background-position: 100% 0;
+  }
+}
+.header {
+  box-shadow: 0 3px 11px 0 rgb(0 0 0 / 15%);
+}
+.heading {
+  @apply text-base font-bold uppercase text-theme relative pb-1 inline-block;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    height: 2px;
+    width: 100%;
+    z-index: 0;
+    @apply bg-theme;
+  }
 }

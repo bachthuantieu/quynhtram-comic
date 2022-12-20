@@ -17,7 +17,7 @@ const HomeCategory = () => {
           <SwiperSlide key={index} className="!w-auto">
             <WrapLink
               href={`${PATH.search}/${category.href}`}
-              className="py-[6px] px-[10px] rounded border border-[#ffa2a2] text-[#f66] bg-[#fff5f5] inline-block font-medium"
+              className="py-[6px] px-[10px] rounded border border-[#ffa2a2] text-[#f97892] bg-[#fff5f5] inline-block font-medium"
             >
               {category.display}
             </WrapLink>

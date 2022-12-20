@@ -6,17 +6,19 @@ const ComicCard = () => {
     <div>
       <WrapLink>
         <Image
-          src="https://st.ntcdntempv3.com/data/comics/65/doc-gia-chiem-huu-co-thieu-phuc-hac-kieu-6033.jpg"
-          className="border-[#ddd] w-full border rounded"
+          src="https://st.ntcdntempv3.com/data/comics/33/cong-chua-ashtarte.jpg"
+          className="border border-[#ddd] overflow-hidden rounded-md aspect-[180/240] object-cover w-full"
           alt=""
         />
       </WrapLink>
-      <WrapLink className="mt-2 text-[15px] font-medium line-clamp-2">
+      <WrapLink className="mt-[6px] line-clamp-2 text-[15px] font-medium text-purple85">
         Hóa Ra Đó Chính Là Tình Yêu, Quỷ Vương!
       </WrapLink>
-      <div className="flex items-center justify-between mt-[6px]">
-        <WrapLink className="text-[#707070]">Chap 3</WrapLink>
-        <span className="text-[#878787]">1 ngày trước</span>
+      <div className="flex items-center justify-between mt-1">
+        <WrapLink href="/" className="text-purple85">
+          Chap 455
+        </WrapLink>
+        <span>12/12/2102</span>
       </div>
     </div>
   );

@@ -4,12 +4,7 @@ import { PATH } from "constants/path";
 
 const Header = () => {
   return (
-    <header
-      style={{
-        backgroundImage:
-          'url("https://st.nettruyentv.com/Data/Sites/1/skins/comic/images/bg_header_2017.jpg")'
-      }}
-    >
+    <header className="bg-[#fef2f4] header">
       <div className="layout-container">
         <div className="h-[60px] flex items-center justify-between">
           <WrapLink href={PATH.home} className="flex-shrink-0">
