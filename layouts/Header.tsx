@@ -1,27 +1,46 @@
-import { Image } from "components/image";
 import { WrapLink } from "components/link";
 import { PATH } from "constants/path";
 
+const links = [
+  {
+    path: PATH.home,
+    display: "Trang chủ"
+  },
+  {
+    path: PATH.home,
+    display: "Truyện tranh"
+  },
+  {
+    path: PATH.home,
+    display: "Phúc lợi"
+  }
+];
+
 const Header = () => {
   return (
-    <header className="bg-[#fef2f4] header">
+    <header>
       <div className="layout-container">
-        <div className="h-[60px] flex items-center justify-between">
-          <WrapLink href={PATH.home} className="flex-shrink-0">
-            <Image
-              src="https://www.ngonphong.com/wp-content/themes/ocumeo/images/logo.png"
-              className="h-9"
-              alt="logo"
-            />
-          </WrapLink>
-          <WrapLink className="flex-shrink-0">
-            <Image
-              src="https://i0.wp.com/koikomik.com/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg?ssl=1"
-              className="w-8 h-8 rounded-full"
-              alt="logo"
-            />
-          </WrapLink>
-        </div>
+        <nav className="flex items-center justify-between py-5">
+          <h2 className="text-xl font-bold text-redff4">QuynhTram</h2>
+          <ul className="flex items-center gap-5">
+            {links.map((link) => (
+              <li key={link.display}>
+                <WrapLink
+                  href={link.path}
+                  className="font-bold transition-all hover:text-redff4 text-dark4d"
+                >
+                  {link.display}
+                </WrapLink>
+              </li>
+            ))}
+          </ul>
+          <button
+            type="button"
+            className="px-5 rounded-[20px] text-white bg-redff4 h-10 font-semibold"
+          >
+            Đăng nhập
+          </button>
+        </nav>
       </div>
     </header>
   );
