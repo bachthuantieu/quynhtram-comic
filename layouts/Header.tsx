@@ -18,10 +18,10 @@ const links = [
 
 const Header = () => {
   return (
-    <header>
+    <header className="shadow1">
       <div className="layout-container">
         <nav className="flex items-center justify-between py-5">
-          <h2 className="text-xl font-bold text-redff4">QuynhTram</h2>
+          <h2 className="text-[22px] font-bold text-redff4">QuynhTram</h2>
           <ul className="flex items-center gap-5">
             {links.map((link) => (
               <li key={link.display}>

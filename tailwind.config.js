@@ -10,7 +10,9 @@ module.exports = {
     extend: {
       colors: {
         redff4: "#ff4545",
-        dark4d: "#4d5168"
+        dark4d: "#4d5168",
+        dark33: "#333333",
+        gray88: "#888888"
       },
       backgroundImage: {
         "gradient-pink": "linear-gradient(to right, #f97892, #fbaebe, #fbaebe, #f97892)",

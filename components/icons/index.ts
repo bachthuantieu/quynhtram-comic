@@ -1,3 +1,4 @@
-import IconClock from "./IconClock";
+import IconHeart from "./IconHeart";
+import IconShare from "./IconShare";
 
-export { IconClock };
+export { IconHeart, IconShare };
