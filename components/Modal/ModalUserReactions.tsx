@@ -14,13 +14,13 @@ const ModalUserReactions = ({ isShow, toggleModal, reactions }: ModalUserReactio
     <Modal
       isOpen={isShow}
       onRequestClose={toggleModal}
-      contentLabel="Bảng cấp độ"
+      contentLabel="Danh sách người bày tỏ cảm xúc"
       className="modal"
       overlayClassName="modal-overlay"
     >
       <div className="p-5">
         <div className={styles.header}>
-          <h4>People is reaction to this info</h4>
+          <h4>Danh sách người bày tỏ cảm xúc</h4>
           <button className={styles.close} onClick={toggleModal}>
             <IconClose className="!w-5 !h-5" />
           </button>

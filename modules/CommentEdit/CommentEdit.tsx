@@ -34,23 +34,23 @@ const CommentEdit = ({ comment, toggleOpenEdit }: CommentEditProps) => {
   return (
     <form onSubmit={handleUpdateComment}>
       <TextArea
-        value={value}
-        className={styles.textarea}
-        onKeyDown={(e) => e.stopPropagation()}
-        onKeyUp={(e) => e.stopPropagation()}
-        onKeyPress={(e) => e.stopPropagation()}
-        onChange={(e) => setValue(e.target.value)}
         rows={1}
+        value={value}
+        className="w-full rounded py-[6px] px-3 min-w-[400px] bg-[#ddd]"
+        onChange={(e) => setValue(e.target.value)}
       />
-      <div className={styles.actions}>
+      <div className="flex items-center justify-end gap-2">
         <button
           type="button"
           onClick={toggleOpenEdit}
-          className={classNames(styles.action, styles.cancel)}
+          className="text-white rounded-md font-medium text-sm mt-1 outline-none py-[6px] px-3 bg-redff4"
         >
           Cancel
         </button>
-        <button type="submit" className={classNames(styles.action, styles.submit)}>
+        <button
+          type="submit"
+          className="text-white rounded-md font-medium text-sm mt-1 outline-none py-[6px] px-3 bg-green-400"
+        >
           Update
         </button>
       </div>

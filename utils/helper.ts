@@ -1,4 +1,12 @@
 export const checkTimeAgo = (timeCreated: number) => {
+  const labels: { [key: string]: string } = {
+    year: "năm",
+    month: "tháng",
+    week: "tuần",
+    day: "ngày",
+    hour: "giờ",
+    minute: "phút"
+  };
   let periods: { [key: string]: number } = {
     year: 365 * 30 * 24 * 60 * 60 * 1000,
     month: 30 * 24 * 60 * 60 * 1000,
@@ -11,7 +19,7 @@ export const checkTimeAgo = (timeCreated: number) => {
   for (const key in periods) {
     if (diff >= periods[key]) {
       let result = Math.floor(diff / periods[key]);
-      return `${result} ${result === 1 ? key : key + "s"} trước`;
+      return `${result} ${result === 1 ? labels[key] : labels[key]} trước`;
     }
   }
   return "Vừa xong";

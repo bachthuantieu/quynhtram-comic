@@ -1,4 +1,3 @@
-import Image from "components/Image";
 import TextArea from "components/Textarea";
 import { defaultAvatar, sampleCurrentUser } from "constants/global";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
@@ -6,7 +5,6 @@ import { db } from "libs/firebase-app";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import styles from "./commentAddNew.module.scss";
 
 const CommentAddNew = () => {
   const router = useRouter();
@@ -21,11 +19,11 @@ const CommentAddNew = () => {
   const handleAddNewComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!currentUser) {
-      toast.error("Please sign in!");
+      toast.error("Vui lòng đăng nhập!");
       return;
     }
     if (!commentValue) {
-      toast.error("Please input comment!");
+      toast.error("Vui lòng nhập bình luận!");
       return;
     }
     try {
@@ -36,14 +34,12 @@ const CommentAddNew = () => {
         fullname: currentUser.displayName,
         content: commentValue.trim(),
         createdAt: serverTimestamp(),
-        categoryId: router.query.category,
-        movieId: router.query.id,
-        episodeId: router.query.episode || 0,
+        slug: router.query.slug,
+        chapterId: router.query.id,
         reactions: []
       });
-      toast.success("Add new comment successfully!");
+      toast.success("Thêm bình luận thành công!");
     } catch (error: any) {
-      console.log("error: ", error);
       toast.error(error?.message);
     } finally {
       setCommentValue("");
@@ -51,25 +47,24 @@ const CommentAddNew = () => {
   };
   useEffect(resizeTextArea, [commentValue]);
   return (
-    <form onSubmit={handleAddNewComment} className={styles.form}>
-      <div className={styles.addNew}>
-        <Image
-          className={styles.avatar}
-          src={currentUser?.photoURL || defaultAvatar}
-          alt={currentUser?.displayName}
-        />
+    <form
+      onSubmit={handleAddNewComment}
+      className="bg-[#f5f5f5] rounded overflow-hidden p-5 mt-3 mb-1"
+    >
+      <div>
         <TextArea
-          rows={1}
+          rows={3}
+          className="w-full"
           value={commentValue}
-          placeholder="Write comment..."
-          onKeyDown={(e) => e.stopPropagation()}
-          onKeyUp={(e) => e.stopPropagation()}
-          onKeyPress={(e) => e.stopPropagation()}
+          placeholder="Nhập bình luận..."
           onChange={(e) => setCommentValue(e.target.value)}
         />
       </div>
-      <button type="submit" className={styles.submit}>
-        Post
+      <button
+        type="submit"
+        className="block px-5 py-2 mt-3 ml-auto text-white bg-redff4 rounded-3xl"
+      >
+        Gửi bình luận
       </button>
     </form>
   );

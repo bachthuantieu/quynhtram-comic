@@ -9,6 +9,16 @@ export interface IComicDetails {
   slug: string;
 }
 
+export interface IComicHistory {
+  id: string;
+  slug: string;
+  title: string;
+  chapterName: string;
+  posterUrl: string;
+  chapterUrl: string;
+  chapters: string[];
+}
+
 export interface IChapterDetails {
   name: string;
   images: string[];

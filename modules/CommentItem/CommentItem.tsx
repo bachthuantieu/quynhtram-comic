@@ -1,17 +1,12 @@
 import Image from "components/Image";
-import { ModalUserReactions } from "components/Modal";
-import { defaultAvatar, sampleCurrentUser } from "constants/global";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import useModal from "hooks/useModal";
+import { sampleCurrentUser } from "constants/global";
+import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "libs/firebase-app";
 import { CommentEdit } from "modules/CommentEdit";
-import EmojiReactions from "modules/EmojiReactions";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { checkTimeAgo } from "utils/helper";
-import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
-import styles from "./commentItem.module.scss";
+import { checkTimeAgo } from "utils/helper";
 
 interface CommentItemProps {
   comment: any;
@@ -19,107 +14,65 @@ interface CommentItemProps {
 
 const CommentItem = ({ comment }: CommentItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const { isShow, toggleModal } = useModal();
   const currentUser = sampleCurrentUser;
-  const foundMyReactionIndex = comment?.reactions?.findIndex(
-    (item: any) => item.userId === currentUser?.uid
-  );
-  const reactionTypes: string[] = [];
-  const myReaction = comment.reactions[foundMyReactionIndex];
-  const [emoji, setEmoji] = useState(myReaction?.reaction || "Like");
-  const handleChangeEmoji = async (value: string) => {
-    const colRef = doc(db, "comments", comment.id);
-    if (!currentUser) return;
-    if (!myReaction) {
-      comment.reactions.push({
-        id: uuidv4(),
-        userId: currentUser.uid,
-        avatar: currentUser.photoURL || defaultAvatar,
-        fullname: currentUser.displayName,
-        reaction: value
-      });
-      await updateDoc(colRef, { reactions: comment.reactions });
-      setEmoji(value);
-      return;
-    }
-    comment.reactions[foundMyReactionIndex].reaction = value;
-    await updateDoc(colRef, { reactions: comment.reactions });
-    setEmoji(value);
-  };
   const toggleOpenEdit = () => {
     if (!currentUser || currentUser.uid !== comment.userId) return;
     setIsEditing(!isEditing);
   };
   const handleDeleteComment = () => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "Bạn có chắc chắn muốn xóa?",
+      text: "Bình luận sẽ bị xóa vĩnh viễn!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Đồng ý",
+      cancelButtonText: "Hủy"
     }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const colRef = doc(db, "comments", comment.id);
-          await deleteDoc(colRef);
-          toast.success("Delete comment successfully!");
-        } catch (error: any) {
-          toast.error(error?.message);
-        }
+      if (!result.isConfirmed) return;
+      try {
+        const colRef = doc(db, "comments", comment.id);
+        await deleteDoc(colRef);
+        toast.success("Xóa bình luận thành công!");
+      } catch (error: any) {
+        toast.error(error?.message);
       }
     });
   };
   return (
-    <div className={styles.comment}>
-      <div className={styles.avatar}>
-        <Image width={44} height={44} src={comment.avatar} alt={comment.fullname} />
+    <div className="flex gap-4 my-4">
+      <div className="p-1 shrink-0">
+        <Image
+          width={44}
+          height={44}
+          src={comment.avatar}
+          alt={comment.fullname}
+          className="object-cover rounded-full bg-dark33"
+        />
       </div>
-      <div>
-        <div className={styles.content}>
-          {isEditing && <CommentEdit comment={comment} toggleOpenEdit={toggleOpenEdit} />}
-          {!isEditing && (
-            <>
-              <span className={styles.username}>{comment.fullname || "Unknown"}</span>
-              <p className={styles.description}>{comment.content}</p>
-            </>
-          )}
-          {comment.reactions.length > 0 && (
-            <div className={styles.reactions} onClick={toggleModal}>
-              {comment.reactions.slice(0, 3).map((item: any) => {
-                const foundTypeIndex = reactionTypes.findIndex((type) => type === item.reaction);
-                if (foundTypeIndex !== -1) return null;
-                reactionTypes.push(item.reaction);
-                return (
-                  <Image
-                    key={item.id}
-                    alt={item.reaction}
-                    className={styles.reaction}
-                    src={`/icon-${item.reaction}.png`}
-                  />
-                );
-              })}
-              <span>{comment.reactions.length}</span>
+      <div className="rounded-lg">
+        {isEditing && <CommentEdit comment={comment} toggleOpenEdit={toggleOpenEdit} />}
+        {!isEditing && (
+          <>
+            <span className="font-bold">{comment.fullname || "Ẩn danh"}</span>
+            <p>{comment.content}</p>
+            <div className="flex items-center gap-3 mt-1 text-sm font-medium">
+              {currentUser?.uid === comment.userId && (
+                <>
+                  <button className="bg-transparent outline-none" onClick={toggleOpenEdit}>
+                    Chỉnh sửa
+                  </button>
+                  <button className="bg-transparent outline-none" onClick={handleDeleteComment}>
+                    Xóa
+                  </button>
+                </>
+              )}
+              <span>{checkTimeAgo((comment?.createdAt?.seconds as number) * 1000)}</span>
             </div>
-          )}
-        </div>
-        <div className={styles.actions}>
-          <EmojiReactions emoji={emoji} handleChangeEmoji={handleChangeEmoji} />
-          {currentUser?.uid === comment.userId && (
-            <>
-              <button className={styles.edit} onClick={toggleOpenEdit}>
-                Edit
-              </button>
-              <button className={styles.delete} onClick={handleDeleteComment}>
-                Delete
-              </button>
-            </>
-          )}
-          <span>{checkTimeAgo((comment?.createdAt?.seconds as number) * 1000)}</span>
-        </div>
+          </>
+        )}
       </div>
-      <ModalUserReactions isShow={isShow} toggleModal={toggleModal} reactions={comment.reactions} />
     </div>
   );
 };

@@ -3,6 +3,8 @@ import Image from "components/Image";
 import { collection, doc, getDoc, onSnapshot, query, where } from "firebase/firestore";
 import LayoutHome from "layouts";
 import { db } from "libs/firebase-app";
+import CommentItem from "modules/CommentItem";
+import CommentList from "modules/CommentList";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -13,7 +15,8 @@ const WatchComicPage = () => {
   const id = router.query?.id as string;
   const [chapterDetails, setChapterDetails] = useState<IChapterDetails | null>(null);
   const [comicDetails, setComicDetails] = useState<IComicDetails | null>(null);
-  console.log("comicDetails: ", comicDetails);
+  const [comments, setComments] = useState<any[]>([]);
+  console.log("comments: ", comments);
   useEffect(() => {
     async function fetchDetailsComic() {
       if (!slug) return;
@@ -30,6 +33,25 @@ const WatchComicPage = () => {
     }
     fetchDetailsComic();
   }, [slug]);
+  console.log("comicDetails: ", comicDetails);
+  useEffect(() => {
+    async function fetchComments() {
+      if (!slug) return;
+      const colRef = query(collection(db, "comments"), where("slug", "==", slug));
+      onSnapshot(colRef, (snapshot) => {
+        const commentsData: any[] = [];
+        snapshot.forEach((doc: any) => {
+          doc.data() &&
+            commentsData.push({
+              id: doc.id,
+              ...doc.data()
+            });
+        });
+        setComments(commentsData);
+      });
+    }
+    fetchComments();
+  }, [slug, id]);
   useEffect(() => {
     async function fetchChapterDetails() {
       if (!id) return;
@@ -64,7 +86,12 @@ const WatchComicPage = () => {
             <Image alt="" src={image} className="mx-auto" key={index} />
           ))}
         </section>
-        <div className="layout-container">{/* <CommentItem /> */}</div>
+        <div className="layout-container">
+          <CommentList />
+          {/* {comments.map((comment) => (
+            <CommentItem comment={comment} key={comment.id} />
+          ))} */}
+        </div>
       </LayoutHome>
     </>
   );

@@ -1,5 +1,8 @@
+import Image from "components/Image";
 import { WrapLink } from "components/link";
+import { defaultAvatar } from "constants/global";
 import { PATH } from "constants/path";
+import useGlobalStore from "store/global-store";
 
 const links = [
   {
@@ -17,6 +20,7 @@ const links = [
 ];
 
 const Header = () => {
+  const { currentUser } = useGlobalStore();
   return (
     <header className="shadow1">
       <div className="layout-container">
@@ -36,12 +40,22 @@ const Header = () => {
               </li>
             ))}
           </ul>
-          <WrapLink
-            href={PATH.signIn}
-            className="px-5 inline-block leading-10 rounded-[20px] text-white bg-redff4 h-10 font-semibold"
-          >
-            Đăng nhập
-          </WrapLink>
+          {currentUser ? (
+            <WrapLink href={PATH.profile}>
+              <Image
+                src={currentUser.photoURL || defaultAvatar}
+                alt={currentUser.email}
+                className="rounded-full w-9 h-9"
+              />
+            </WrapLink>
+          ) : (
+            <WrapLink
+              href={PATH.signIn}
+              className="px-5 inline-block leading-10 rounded-[20px] text-white bg-redff4 h-10 font-semibold"
+            >
+              Đăng nhập
+            </WrapLink>
+          )}
         </nav>
       </div>
     </header>

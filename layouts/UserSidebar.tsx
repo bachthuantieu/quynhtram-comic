@@ -2,8 +2,11 @@ import Image from "components/Image";
 import { WrapLink } from "components/link";
 import { defaultAvatar } from "constants/global";
 import { PATH } from "constants/path";
+import { signOut } from "firebase/auth";
 import Sidebar from "layouts/Sidebar";
+import { auth } from "libs/firebase-app";
 import Link from "next/link";
+import useGlobalStore from "store/global-store";
 
 const sidebarLinks = [
   {
@@ -15,20 +18,22 @@ const sidebarLinks = [
     icon: "/icon-password.png",
     path: PATH.changePassword,
     display: "Đổi mật khẩu"
-  },
-  {
-    icon: "/icon-logout.png",
-    path: PATH.home,
-    display: "Đăng xuất"
   }
 ];
 
 const UserSidebar = () => {
-  const currentUser = null;
+  const { currentUser } = useGlobalStore();
+  const handleLogout = () => {
+    signOut(auth);
+  };
   return (
     <Sidebar labelOpenSidebar="Tài khoản của tôi">
       <div className="flex items-center gap-x-2">
-        <Image alt="avatar" src={defaultAvatar} className="object-cover w-10 h-10 rounded-full" />
+        <Image
+          alt={currentUser?.displayName}
+          src={currentUser?.photoURL || defaultAvatar}
+          className="object-cover w-10 h-10 rounded-full"
+        />
         <div>
           <h3 className="font-semibold line-clamp-1">Hoang Lam</h3>
           <Link href={PATH.home}>Sửa hồ sơ</Link>
@@ -43,6 +48,12 @@ const UserSidebar = () => {
             </WrapLink>
           </li>
         ))}
+        <li>
+          <button onClick={handleLogout} className="flex items-center gap-x-3">
+            <Image src="/icon-logout.png" alt="Đăng xuất" className="w-5 h-5" />
+            <span>Đăng xuất</span>
+          </button>
+        </li>
       </ul>
     </Sidebar>
   );

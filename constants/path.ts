@@ -5,5 +5,6 @@ export const PATH = {
   profile: "/ca-nhan",
   comicDetails: "/truyen-tranh",
   changePassword: "/doi-mat-khau",
-  forgotPassword: "/quen-mat-khau"
+  forgotPassword: "/quen-mat-khau",
+  pageNotFound: "/404"
 };

@@ -5,13 +5,14 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import { db } from "libs/firebase-app";
 import { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
+import useGlobalStore from "store/global-store";
 
 const UploadAvatar = () => {
-  const currentUser = null;
+  const { currentUser } = useGlobalStore();
   const [avatar, setAvatar] = useState("");
   const deleteAvatar = async () => {
     if (!currentUser) return;
-    const colRef = doc(db, "users", "hT26MaMmxkTlPRkTHmHQq8CLEUz2");
+    const colRef = doc(db, "users", currentUser.uid);
     await updateDoc(colRef, {
       photoURL: ""
     });
@@ -25,9 +26,9 @@ const UploadAvatar = () => {
       const storageRef = ref(storage, "images/" + files[0].name);
       await uploadBytesResumable(storageRef, files[0]);
       const newAvatar = await getDownloadURL(storageRef);
-      const colRef = doc(db, "users", "hT26MaMmxkTlPRkTHmHQq8CLEUz2");
+      const colRef = doc(db, "users", currentUser.uid);
       await updateDoc(colRef, { photoURL: newAvatar });
-      toast.success("Update avatar successfully!");
+      toast.success("Cập nhật ảnh đại diện thành công!");
       setAvatar(newAvatar);
     } catch (error: any) {
       toast.error(error?.message);
@@ -36,7 +37,7 @@ const UploadAvatar = () => {
   return (
     <ImageUpload
       name="photoURL"
-      image={avatar}
+      image={currentUser?.photoURL || avatar}
       handleDeleteImage={deleteAvatar}
       handleUploadImage={handleUploadAvatar}
     />
