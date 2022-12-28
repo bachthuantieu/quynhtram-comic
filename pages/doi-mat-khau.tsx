@@ -1,6 +1,8 @@
 import FormGroup from "components/FormGroup";
 import { InputPassword } from "components/InputPassword";
 import Label from "components/Label";
+import { WrapLink } from "components/link";
+import { PATH } from "constants/path";
 import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 import useInputChange from "hooks/useInputChange";
 import LayoutUser from "layouts/LayoutUser";
@@ -83,6 +85,9 @@ const ChangePasswordPage = () => {
             Đổi mật khẩu
           </button>
         </form>
+        <WrapLink className="inline-block mt-3 text-center" href={PATH.forgotPassword}>
+          Quên mật khẩu?
+        </WrapLink>
       </Template>
     </LayoutUser>
   );

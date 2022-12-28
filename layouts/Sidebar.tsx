@@ -9,11 +9,7 @@ interface SidebarProps {
   className?: string;
 }
 
-const Sidebar = ({
-  children,
-  labelOpenSidebar = "Mở sidebar",
-  className = "lg:w-[220px] shrink-0"
-}: SidebarProps) => {
+const Sidebar = ({ children, labelOpenSidebar = "Mở sidebar", className = "" }: SidebarProps) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const toggleSidebar = () => {
@@ -33,7 +29,7 @@ const Sidebar = ({
       </button>
       <aside
         className={classNames(
-          "-translate-x-full z-[300] bg-[#f8fafc] lg:bg-transparent w-full max-w-[300px] fixed top-0 left-0 bottom-0 lg:translate-x-0 p-5 lg:h-fit transition-all duration-300 lg:static overflow-auto dark:bg-dark26 rounded-xl",
+          "-translate-x-full z-[300] bg-[#f8fafc] lg:bg-transparent w-full max-w-[220px] fixed top-0 left-0 bottom-0 lg:translate-x-0 p-5 lg:h-fit transition-all duration-300 lg:static overflow-auto dark:bg-dark26 rounded-xl pl-0 shrink-0",
           className
         )}
         ref={sidebarRef}

@@ -6,9 +6,11 @@ import IconList from "./IconList";
 import IconChevronLeft from "./IconChevronLeft";
 import IconTrash from "./IconTrash";
 import IconUploadImage from "./IconUploadImage";
+import IconClose from "./IconClose";
 
 export {
   IconHeart,
+  IconClose,
   IconShare,
   IconList,
   IconChevronLeft,

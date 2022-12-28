@@ -3,6 +3,7 @@ import Input from "components/Input";
 import { InputPassword } from "components/InputPassword";
 import Label from "components/Label";
 import { WrapLink } from "components/link";
+import { PATH } from "constants/path";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import useInputChange from "hooks/useInputChange";
 import { auth } from "libs/firebase-app";
@@ -52,8 +53,8 @@ const SignInPage = () => {
           Đăng nhập
         </button>
         <div className="flex items-center justify-between mt-3">
-          <WrapLink>Đăng ký ngay</WrapLink>
-          <WrapLink>Quên mật khẩu?</WrapLink>
+          <WrapLink href={PATH.signUp}>Đăng ký ngay</WrapLink>
+          <WrapLink href={PATH.forgotPassword}>Quên mật khẩu?</WrapLink>
         </div>
       </form>
     </div>

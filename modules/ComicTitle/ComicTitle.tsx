@@ -1,13 +1,14 @@
 import { WrapLink } from "components/link";
-import React from "react";
+import React, { AnchorHTMLAttributes } from "react";
 
-interface ComicTitleProps {
-  children: React.ReactNode;
-}
+interface ComicTitleProps extends AnchorHTMLAttributes<HTMLAnchorElement> {}
 
-const ComicTitle = ({ children }: ComicTitleProps) => {
+const ComicTitle = ({ children, ...props }: ComicTitleProps) => {
   return (
-    <WrapLink className="inline-block mt-[10px] text-[17px] font-bold leading-[22px] line-clamp-2 text-dark33">
+    <WrapLink
+      className="inline-block mt-1 text-[17px] font-bold leading-[22px] line-clamp-2 text-dark33"
+      {...props}
+    >
       {children}
     </WrapLink>
   );

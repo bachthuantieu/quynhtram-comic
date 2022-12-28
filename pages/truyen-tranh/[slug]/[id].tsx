@@ -1,9 +1,46 @@
+import { IChapterDetails, IComicDetails } from "@types";
 import Image from "components/Image";
+import { collection, doc, getDoc, onSnapshot, query, where } from "firebase/firestore";
 import LayoutHome from "layouts";
-import CommentItem from "modules/CommentItem";
+import { db } from "libs/firebase-app";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const WatchComicPage = () => {
+  const router = useRouter();
+  const slug = router.query?.slug as string;
+  const id = router.query?.id as string;
+  const [chapterDetails, setChapterDetails] = useState<IChapterDetails | null>(null);
+  const [comicDetails, setComicDetails] = useState<IComicDetails | null>(null);
+  console.log("comicDetails: ", comicDetails);
+  useEffect(() => {
+    async function fetchDetailsComic() {
+      if (!slug) return;
+      const colRef = query(collection(db, "comics"), where("slug", "==", slug));
+      onSnapshot(colRef, (snapshot) => {
+        snapshot.forEach((doc: any) => {
+          doc.data() &&
+            setComicDetails({
+              id: doc.id,
+              ...doc.data()
+            });
+        });
+      });
+    }
+    fetchDetailsComic();
+  }, [slug]);
+  useEffect(() => {
+    async function fetchChapterDetails() {
+      if (!id) return;
+      const colRef = doc(db, "chapters", id);
+      const docData = await getDoc(colRef);
+      const data: any = docData.data();
+      setChapterDetails(data);
+    }
+    fetchChapterDetails();
+  }, [id]);
+  if (!comicDetails || !chapterDetails) return null;
   return (
     <>
       <Head>
@@ -15,26 +52,19 @@ const WatchComicPage = () => {
         <div className="layout-container">
           <div className="text-center">
             <h1 className="pt-5 text-xl font-bold md:text-2xl text-dark4d">
-              Tổng Tài Tại Thượng - Chapter 12
+              {comicDetails.title} - {chapterDetails.name}
             </h1>
-            <span className="inline-block mt-1">[Cập nhật lúc: 20:41 27/12/2022]</span>
+            <span className="inline-block mt-1">
+              [Cập nhật lúc: {new Date(chapterDetails.createdAt.seconds * 1000).toLocaleString()}]
+            </span>
           </div>
         </div>
         <section className="py-5">
-          {Array(10)
-            .fill(0)
-            .map((item, index) => (
-              <Image
-                src="https://comic24h.net/photo.comic24h.net/bloodtear/stories/co-vo-ngot-ngao-co-chut-bat-luong/chap-355/2_03_63ab223f784d6.jpg"
-                alt=""
-                className="mx-auto"
-                key={index}
-              />
-            ))}
+          {chapterDetails.images.map((image, index) => (
+            <Image alt="" src={image} className="mx-auto" key={index} />
+          ))}
         </section>
-        <div className="layout-container">
-          <CommentItem />
-        </div>
+        <div className="layout-container">{/* <CommentItem /> */}</div>
       </LayoutHome>
     </>
   );

@@ -3,5 +3,7 @@ export const PATH = {
   signUp: "/dang-ky",
   signIn: "/dang-nhap",
   profile: "/ca-nhan",
-  changePassword: "/doi-mat-khau"
+  comicDetails: "/truyen-tranh",
+  changePassword: "/doi-mat-khau",
+  forgotPassword: "/quen-mat-khau"
 };

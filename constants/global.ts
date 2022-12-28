@@ -23,3 +23,14 @@ export const REVALIDATE_TIME = {
   success: 360,
   fail: 60
 };
+
+export const sampleCurrentUser = {
+  uid: "FT9PcOzthkbDcc4jdPGwO9vpCsD2",
+  email: "bachthuantieu@gmail.com",
+  photoURL:
+    "https://firebasestorage.googleapis.com/v0/b/netfilm-5ba5f.appspot.com/o/images%2Favatar-vip.png?alt=media&token=fade7c11-f18b-4953-8bcb-2f56a694a5fd",
+  displayName: "Nguyen Hoang Lam",
+  role: "USER",
+  status: "ACTIVE",
+  emailVerified: false
+};

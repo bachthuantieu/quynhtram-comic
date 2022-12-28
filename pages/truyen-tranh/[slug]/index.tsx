@@ -1,11 +1,16 @@
+import { IComicDetails } from "@types";
 import { IconHeart, IconShare } from "components/Icons";
 import Image from "components/Image";
 import { WrapLink } from "components/link";
+import { PATH } from "constants/path";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import LayoutHome from "layouts";
+import { db } from "libs/firebase-app";
 import ComicTitle from "modules/ComicTitle";
 import Heading from "modules/Heading";
 import Head from "next/head";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 
 const features = [
   {
@@ -52,6 +57,27 @@ const Button = ({ children }: { children: React.ReactNode }) => {
 };
 
 const ComicDetailsPage = () => {
+  const router = useRouter();
+  const slug = router.query?.slug as string;
+  const [comicDetails, setComicDetails] = useState<IComicDetails | null>(null);
+  console.log("comicDetails: ", comicDetails);
+  useEffect(() => {
+    async function fetchDetailsComic() {
+      if (!slug) return;
+      const colRef = query(collection(db, "comics"), where("slug", "==", slug));
+      onSnapshot(colRef, (snapshot) => {
+        snapshot.forEach((doc: any) => {
+          doc.data() &&
+            setComicDetails({
+              id: doc.id,
+              ...doc.data()
+            });
+        });
+      });
+    }
+    fetchDetailsComic();
+  }, [slug]);
+  if (!comicDetails) return null;
   return (
     <>
       <Head>
@@ -62,18 +88,20 @@ const ComicDetailsPage = () => {
       <LayoutHome>
         <div className="layout-container">
           <section className="flex flex-col gap-10 pt-10 md:flex-row">
-            <WrapLink className="bg-[#999999] rounded-md overflow-hidden mx-auto md:shrink-0">
+            <WrapLink className="bg-[#999999] rounded-lg overflow-hidden mx-auto md:shrink-0">
               <Image
-                alt=""
-                src="https://cn-e-pic.mangatoon.mobi/cartoon-posters/7859c5a.webp"
+                alt={comicDetails.title}
+                src={comicDetails.poster}
                 className="aspect-[260/345] object-cover w-[200px] md:w-[260px]"
               />
             </WrapLink>
             <div>
-              <h1 className="inline-block text-2xl font-bold text-dark33">Tổng Tài Tại Thượng</h1>
+              <h1 className="inline-block text-2xl font-bold text-dark33">{comicDetails.title}</h1>
               <span className="inline-block mt-1 text-sm line-clamp-1 text-gray88">
-                Tình yêu / Tổng tài / Ngược / Công sở / Mối tình đầu / Đô thị / Bá đạo / Có em bé /
-                Gái ngoan
+                {comicDetails.categories.map((category, index) => {
+                  if (comicDetails.categories.length === index + 1) return category;
+                  return `${category} / `;
+                })}
               </span>
               <div className="flex items-center gap-2 mt-3">
                 <div className="flex items-center text-[#FFBD4F]">
@@ -91,15 +119,9 @@ const ComicDetailsPage = () => {
                       </svg>
                     ))}
                 </div>
-                <span className="font-medium text-gray88">4.5</span>
+                <span className="font-medium text-gray88">{comicDetails.rating}</span>
               </div>
-              <p className="pt-3 text-sm text-gray88 md:text-base">
-                Cung Âu, một tên thiếu gia giàu có mắc bệnh hoang tưởng, và Thời Tiểu Niệm, một tác
-                giả truyện tranh nghèo rớt mùng tơi và cô đơn đã bị buộc chặt lấy nhau trong một
-                tình huống hết sức trớ trêu: Cung Âu nghĩ Thời Tiểu Niệm đã giấu nhẹm đứa con của
-                hai người (không hề). Cùng theo dõi xem nam chính sẽ ngược nữ chính theo những cách
-                nào, và làm thế nào mà họ yêu nhau...
-              </p>
+              <p className="pt-3 text-sm text-gray88 md:text-base">{comicDetails.description}</p>
             </div>
           </section>
           <div className="flex items-center gap-5 my-4">
@@ -121,33 +143,21 @@ const ComicDetailsPage = () => {
           <section className="">
             <div className="py-3 flex items-center gap-3 border-b border-[#00000033]">
               <h3 className="text-xl font-semibold text-redff4">Chapter</h3>
-              <span className="text-gray88">Đã cập nhật 548 chương</span>
+              <span className="text-gray88">Đã cập nhật {comicDetails.chapters.length} chương</span>
             </div>
             <div className="mt-5 chapter-list">
-              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
-                <span>Chapter 1</span>
-                <span className="text-gray88">25/12/2022</span>
-              </div>
-              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
-                <span>Chapter 2</span>
-                <span className="text-gray88">25/12/2022</span>
-              </div>
-              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
-                <span>Chapter 3</span>
-                <span className="text-gray88">25/12/2022</span>
-              </div>
-              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
-                <span>Chapter 4</span>
-                <span className="text-gray88">25/12/2022</span>
-              </div>
-              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
-                <span>Chapter 5</span>
-                <span className="text-gray88">25/12/2022</span>
-              </div>
-              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
-                <span>Chapter 6</span>
-                <span className="text-gray88">25/12/2022</span>
-              </div>
+              {comicDetails.chapters.map((chapter) => (
+                <WrapLink
+                  key={chapter.id}
+                  href={`${PATH.comicDetails}/${slug}/${chapter.id}`}
+                  className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg"
+                >
+                  <span>{chapter.name}</span>
+                  <span className="text-gray88">
+                    {new Date(chapter.createdAt.seconds * 1000).toLocaleDateString("vi-VI")}
+                  </span>
+                </WrapLink>
+              ))}
             </div>
           </section>
           <section className="mt-8">

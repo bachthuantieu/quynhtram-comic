@@ -4,6 +4,7 @@ import { InputPassword } from "components/InputPassword";
 import Label from "components/Label";
 import { WrapLink } from "components/link";
 import { defaultAvatar, userRole, userStatus } from "constants/global";
+import { PATH } from "constants/path";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import useInputChange from "hooks/useInputChange";
@@ -46,7 +47,7 @@ const SignUpPage = () => {
         createdAt: serverTimestamp(),
         follows: []
       });
-      toast.success("Sign up successfully!");
+      toast.success("Đăng ký thành công!");
     } catch (error: any) {
       toast.error(error?.message);
     }
@@ -83,8 +84,8 @@ const SignUpPage = () => {
           Đăng ký
         </button>
         <div className="flex items-center justify-between mt-3">
-          <WrapLink>Đăng nhập ngay</WrapLink>
-          <WrapLink>Quên mật khẩu?</WrapLink>
+          <WrapLink href={PATH.signIn}>Đăng nhập ngay</WrapLink>
+          <WrapLink href={PATH.forgotPassword}>Quên mật khẩu?</WrapLink>
         </div>
       </form>
     </div>
