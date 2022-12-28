@@ -31,3 +31,8 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+.chapter-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+  grid-gap: 10px;
+}

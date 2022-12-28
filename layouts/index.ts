@@ -1,3 +1,3 @@
 import LayoutHome from "./LayoutHome";
 
-export { LayoutHome };
+export default LayoutHome;

@@ -1,9 +1,55 @@
 import { IconHeart, IconShare } from "components/Icons";
-import { Image } from "components/image";
+import Image from "components/Image";
 import { WrapLink } from "components/link";
-import { LayoutHome } from "layouts";
+import LayoutHome from "layouts";
+import ComicTitle from "modules/ComicTitle";
+import Heading from "modules/Heading";
 import Head from "next/head";
 import React from "react";
+
+const features = [
+  {
+    id: 1,
+    poster: "https://cn-e-pic.mangatoon.mobi/cartoon-posters/1005142f6a3.webp",
+    title: "Thiên Tài Khốc Bảo: Tổng Tài Cuồng Sủng Thê"
+  },
+  {
+    id: 2,
+    poster: "https://cn-e-pic.mangatoon.mobi/cartoon-posters/1005142f6a3.webp",
+    title: "Kính Chào Nữ Vương Đại Nhân"
+  },
+  {
+    id: 3,
+    poster: "https://cn-e-pic.mangatoon.mobi/cartoon-posters/4509188159.webp",
+    title: "Bá Đạo Tổng Tài Nhẹ Nhàng Yêu"
+  },
+  {
+    id: 4,
+    poster: "https://cn-e-pic.mangatoon.mobi/cartoon-posters/1005142f6a3.webp",
+    title: "Thiên Tài Khốc Bảo: Tổng Tài Cuồng Sủng Thê"
+  },
+  {
+    id: 5,
+    poster: "https://cn-e-pic.mangatoon.mobi/cartoon-posters/1005142f6a3.webp",
+    title: "Kính Chào Nữ Vương Đại Nhân"
+  },
+  {
+    id: 6,
+    poster: "https://cn-e-pic.mangatoon.mobi/cartoon-posters/4509188159.webp",
+    title: "Bá Đạo Tổng Tài Nhẹ Nhàng Yêu"
+  }
+];
+
+const Button = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <button
+      type="button"
+      className="flex items-center h-12 gap-[6px] px-5 font-semibold text-redff4 rounded-[100px] border border-redff4"
+    >
+      {children}
+    </button>
+  );
+};
 
 const ComicDetailsPage = () => {
   return (
@@ -15,12 +61,12 @@ const ComicDetailsPage = () => {
       </Head>
       <LayoutHome>
         <div className="layout-container">
-          <section className="flex gap-10 pt-10">
-            <WrapLink className="bg-[#999999] rounded overflow-hidden shrink-0">
+          <section className="flex flex-col gap-10 pt-10 md:flex-row">
+            <WrapLink className="bg-[#999999] rounded-md overflow-hidden mx-auto md:shrink-0">
               <Image
-                src="https://cn-e-pic.mangatoon.mobi/cartoon-posters/7859c5a.webp"
                 alt=""
-                className="aspect-[260/345] w-[260px]"
+                src="https://cn-e-pic.mangatoon.mobi/cartoon-posters/7859c5a.webp"
+                className="aspect-[260/345] object-cover w-[200px] md:w-[260px]"
               />
             </WrapLink>
             <div>
@@ -56,27 +102,70 @@ const ComicDetailsPage = () => {
               </p>
             </div>
           </section>
-          <section className="flex items-center gap-5 mt-4">
+          <div className="flex items-center gap-5 my-4">
             <button
               type="button"
               className="h-12 px-5 font-semibold text-white rounded-[100px] bg-redff4"
             >
               Xem từ đầu
             </button>
-            <button
-              type="button"
-              className="flex items-center h-12 gap-[6px] px-5 font-semibold text-redff4 rounded-[100px] border border-redff4"
-            >
+            <Button>
               <IconHeart />
               <span>Theo dõi</span>
-            </button>
-            <button
-              type="button"
-              className="flex items-center h-12 gap-[6px] px-5 font-semibold text-redff4 rounded-[100px] border border-redff4"
-            >
+            </Button>
+            <Button>
               <IconShare />
               <span>Chia sẻ</span>
-            </button>
+            </Button>
+          </div>
+          <section className="">
+            <div className="py-3 flex items-center gap-3 border-b border-[#00000033]">
+              <h3 className="text-xl font-semibold text-redff4">Chapter</h3>
+              <span className="text-gray88">Đã cập nhật 548 chương</span>
+            </div>
+            <div className="mt-5 chapter-list">
+              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
+                <span>Chapter 1</span>
+                <span className="text-gray88">25/12/2022</span>
+              </div>
+              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
+                <span>Chapter 2</span>
+                <span className="text-gray88">25/12/2022</span>
+              </div>
+              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
+                <span>Chapter 3</span>
+                <span className="text-gray88">25/12/2022</span>
+              </div>
+              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
+                <span>Chapter 4</span>
+                <span className="text-gray88">25/12/2022</span>
+              </div>
+              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
+                <span>Chapter 5</span>
+                <span className="text-gray88">25/12/2022</span>
+              </div>
+              <div className="bg-[#f8f8f8] flex items-center p-3 justify-between rounded-lg">
+                <span>Chapter 6</span>
+                <span className="text-gray88">25/12/2022</span>
+              </div>
+            </div>
+          </section>
+          <section className="mt-8">
+            <Heading>Truyện liên quan</Heading>
+            <div className="pt-4 comic-list">
+              {features.map((comic) => (
+                <div key={comic.id}>
+                  <WrapLink className="bg-[#999999]">
+                    <Image
+                      src={comic.poster}
+                      alt={comic.title}
+                      className="rounded aspect-[175/233]"
+                    />
+                  </WrapLink>
+                  <ComicTitle>{comic.title}</ComicTitle>
+                </div>
+              ))}
+            </div>
           </section>
         </div>
       </LayoutHome>

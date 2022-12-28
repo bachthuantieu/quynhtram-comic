@@ -16,7 +16,8 @@ module.exports = {
       },
       backgroundImage: {
         "gradient-pink": "linear-gradient(to right, #f97892, #fbaebe, #fbaebe, #f97892)",
-        "gradient-purple": "linear-gradient(to right,#8a2be2 0%,#b980ee 51%,#8a2be2 100%)"
+        "gradient-purple": "linear-gradient(to right,#8a2be2 0%,#b980ee 51%,#8a2be2 100%)",
+        auth: `url("/bg-auth.jpg")`
       }
     }
   },

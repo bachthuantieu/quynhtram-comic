@@ -1,4 +1,4 @@
-import { Image } from "components/image";
+import Image from "components/Image";
 import { WrapLink } from "components/link";
 import ComicTitle from "modules/ComicTitle";
 import Heading from "modules/Heading";

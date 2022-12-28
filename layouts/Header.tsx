@@ -21,7 +21,9 @@ const Header = () => {
     <header className="shadow1">
       <div className="layout-container">
         <nav className="flex items-center justify-between py-5">
-          <h2 className="text-[22px] font-bold text-redff4">QuynhTram</h2>
+          <WrapLink>
+            <h2 className="text-[22px] font-bold text-redff4">QuynhTram</h2>
+          </WrapLink>
           <ul className="flex items-center gap-5">
             {links.map((link) => (
               <li key={link.display}>
@@ -34,12 +36,12 @@ const Header = () => {
               </li>
             ))}
           </ul>
-          <button
-            type="button"
-            className="px-5 rounded-[20px] text-white bg-redff4 h-10 font-semibold"
+          <WrapLink
+            href={PATH.signIn}
+            className="px-5 inline-block leading-10 rounded-[20px] text-white bg-redff4 h-10 font-semibold"
           >
             Đăng nhập
-          </button>
+          </WrapLink>
         </nav>
       </div>
     </header>

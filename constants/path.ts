@@ -1,4 +1,7 @@
 export const PATH = {
   home: "/",
-  search: "/search",
+  signUp: "/dang-ky",
+  signIn: "/dang-nhap",
+  profile: "/ca-nhan",
+  changePassword: "/doi-mat-khau"
 };

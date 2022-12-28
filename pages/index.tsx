@@ -1,4 +1,4 @@
-import { LayoutHome } from "layouts";
+import LayoutHome from "layouts";
 import HomeCategory from "modules/HomeCategory";
 import HomeFeatured from "modules/HomeFeatured";
 import HomeHot from "modules/HomeHot";
